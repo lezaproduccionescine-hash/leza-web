@@ -1,13 +1,13 @@
 const downloadBtn = document.getElementById("downloadBtn");
 
-if(downloadBtn){
+if (downloadBtn) {
 
     downloadBtn.addEventListener("click", () => {
 
-    window.location.href =
-        "https://drive.google.com/uc?export=download&id=13AFs5IKjRYO4hukci5pDAerUyM_gmFai";
+        window.location.href =
+        "https://github.com/lezaproduccionescine-hash/leza-web/releases/download/v1.0.0/Leza.TV.Setup.1.0.0.exe";
 
-});
+    });
 
 }
 
