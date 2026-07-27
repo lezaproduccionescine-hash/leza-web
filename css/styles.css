@@ -728,3 +728,252 @@ footer p{
     line-height:1.6;
 
 }
+
+/* =========================
+   CONTRATANOS
+========================= */
+
+#contratanos {
+
+    padding: 80px 20px;
+
+    background: #050505;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+
+.contact-card {
+
+    width: 100%;
+
+    max-width: 700px;
+
+    background: #111;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    border: 1px solid #c9a227;
+
+    box-shadow: 0 0 25px rgba(201,162,39,0.25);
+
+    text-align: center;
+
+}
+
+
+.contact-card h2 {
+
+    color: #d4af37;
+
+    font-size: 32px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.contact-card p {
+
+    color: #ddd;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* FORMULARIO */
+
+#contactForm {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+
+#contactForm input,
+#contactForm textarea {
+
+
+    background: #080808;
+
+    border: 1px solid #555;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    color: white;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: .3s;
+
+}
+
+
+
+#contactForm textarea {
+
+    min-height: 150px;
+
+    resize: vertical;
+
+}
+
+
+
+#contactForm input:focus,
+#contactForm textarea:focus {
+
+    border-color: #d4af37;
+
+    box-shadow: 0 0 12px rgba(212,175,55,.5);
+
+}
+
+
+
+/* BOTONES */
+
+
+#contactForm button,
+#plansBtn {
+
+
+    margin-top: 20px;
+
+    padding: 15px 30px;
+
+    border-radius: 30px;
+
+    border: none;
+
+    cursor: pointer;
+
+    background: #d4af37;
+
+    color: #000;
+
+    font-weight: bold;
+
+    transition: .3s;
+
+}
+
+
+
+#contactForm button:hover,
+#plansBtn:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow: 0 0 20px #d4af37;
+
+}
+
+
+/* MODAL PLANES */
+
+
+.plans-content {
+
+    text-align: center;
+
+}
+
+
+#planImage {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    border-radius: 15px;
+
+    border: 2px solid #d4af37;
+
+    margin: 20px 0;
+
+}
+
+
+
+.plans-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+}
+
+
+.plans-buttons button {
+
+
+    background: #d4af37;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+}
+
+
+
+.plans-buttons button:hover {
+
+    transform: scale(1.1);
+
+}
+
+
+/* ANIMACION TARJETA */
+
+
+.contact-card {
+
+    animation: aparecer .8s ease;
+
+}
+
+
+@keyframes aparecer {
+
+    from {
+
+        opacity:0;
+
+        transform: translateY(40px);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform: translateY(0);
+
+    }
+
+}

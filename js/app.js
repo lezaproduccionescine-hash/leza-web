@@ -1,11 +1,16 @@
 const downloadBtn = document.getElementById("downloadBtn");
 
-downloadBtn.addEventListener("click", () => {
+if(downloadBtn){
+
+    downloadBtn.addEventListener("click", () => {
 
     window.location.href =
         "https://drive.google.com/uc?export=download&id=13AFs5IKjRYO4hukci5pDAerUyM_gmFai";
 
 });
+
+}
+
 // ===========================
 // MODAL DECLARACIÓN
 // ===========================
@@ -14,24 +19,148 @@ const securityBtn = document.getElementById("securityBtn");
 const securityModal = document.getElementById("securityModal");
 const closeModal = document.getElementById("closeModal");
 
-securityBtn.addEventListener("click", () => {
 
-    securityModal.style.display = "flex";
+if (securityBtn && securityModal) {
 
-});
+    securityBtn.addEventListener("click", () => {
 
-closeModal.addEventListener("click", () => {
+        securityModal.style.display = "flex";
 
-    securityModal.style.display = "none";
+    });
 
-});
+}
 
-window.addEventListener("click", (e) => {
 
-    if(e.target === securityModal){
+if (closeModal && securityModal) {
+
+    closeModal.addEventListener("click", () => {
 
         securityModal.style.display = "none";
 
+    });
+
+}
+
+
+if (securityModal) {
+
+    window.addEventListener("click", (e) => {
+
+        if(e.target === securityModal){
+
+            securityModal.style.display = "none";
+
+        }
+
+    });
+
+}
+
+// =========================
+// MODAL NUESTROS PLANES
+// =========================
+
+const plansBtn = document.getElementById("plansBtn");
+const plansModal = document.getElementById("plansModal");
+const closePlans = document.getElementById("closePlans");
+
+const planImage = document.getElementById("planImage");
+const prevPlan = document.getElementById("prevPlan");
+const nextPlan = document.getElementById("nextPlan");
+
+
+let currentPlan = 1;
+
+
+if (plansBtn) {
+
+
+    plansBtn.addEventListener("click", () => {
+
+        plansModal.style.display = "flex";
+
+    });
+
+
+}
+
+
+if (closePlans) {
+
+
+    closePlans.addEventListener("click", () => {
+
+        plansModal.style.display = "none";
+
+    });
+
+
+}
+
+
+
+function changePlan(){
+
+
+    if(currentPlan === 1){
+
+        planImage.src = "assets/plan1.png";
+
+    } else {
+
+        planImage.src = "assets/plan2.png";
+
     }
+
+
+}
+
+
+
+if(nextPlan){
+
+
+    nextPlan.addEventListener("click",()=>{
+
+
+        currentPlan = 2;
+
+        changePlan();
+
+
+    });
+
+
+}
+
+
+
+if(prevPlan){
+
+
+    prevPlan.addEventListener("click",()=>{
+
+
+        currentPlan = 1;
+
+        changePlan();
+
+
+    });
+
+
+}
+
+
+
+window.addEventListener("click",(e)=>{
+
+
+    if(e.target === plansModal){
+
+        plansModal.style.display = "none";
+
+    }
+
 
 });
