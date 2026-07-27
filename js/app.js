@@ -5,7 +5,7 @@ if (downloadBtn) {
     downloadBtn.addEventListener("click", () => {
 
         window.location.href =
-        "https://github.com/lezaproduccionescine-hash/leza-web/releases/download/v1.0.0/Leza.TV.Setup.1.0.0.exe";
+        "https://github.com/lezaproduccionescine-hash/leza-web/releases/latest/download/LezaTVSetup.exe";
 
     });
 
