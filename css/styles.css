@@ -193,6 +193,39 @@ h2{
 
 }
 
+#downloadGameBtn{
+
+    background:#D4AF37;
+
+    color:black;
+
+    border:none;
+
+    padding:18px 45px;
+
+    border-radius:10px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+#downloadGameBtn:hover{
+
+    background:#f4cf62;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 0 25px rgba(212,175,55,.5);
+
+}
+
 .compatibilidad{
 
     margin-top:30px;

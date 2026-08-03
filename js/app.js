@@ -164,3 +164,20 @@ window.addEventListener("click",(e)=>{
 
 
 });
+
+// ===========================
+// DESCARGA CLAQUETA EN APUROS
+// ===========================
+
+const downloadGameBtn = document.getElementById("downloadGameBtn");
+
+if (downloadGameBtn) {
+
+    downloadGameBtn.addEventListener("click", () => {
+
+        window.location.href =
+        "https://github.com/lezaproduccionescine-hash/leza-web/releases/download/v1.0.1/claqueta.en.apuros.Setup.1.0.0.exe";
+
+    });
+
+}
