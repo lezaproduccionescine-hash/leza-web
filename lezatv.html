@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Leza TV | En Vivo</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
+
+</head>
+
+<body>
+
+<header>
+
+<nav class="navbar">
+
+<div class="brand">
+
+<img src="assets/logo.png" alt="Leza Producciones">
+
+<span>LEZA PRODUCCIONES</span>
+
+</div>
+
+<div>
+
+<a href="index.html">Inicio</a>
+
+<a href="index.html#descargas">⬇ Descargas</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<section>
+
+<h1>LEZA TV</h1>
+
+<p class="subtitle">
+Transmisión oficial de Leza Producciones
+</p>
+
+<div class="tv-container">
+
+<div id="liveBadge" class="live-badge hidden">
+    🔴 EN VIVO
+</div>
+
+<div id="status" class="status">
+    Conectando con Leza TV...
+</div>
+
+<video
+    id="video"
+    controls
+    autoplay
+    playsinline>
+</video>
+
+</div>>
+
+</section>
+
+<script src="js/web-player.js"></script>
+
+</body>
+</html>

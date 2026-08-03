@@ -112,17 +112,6 @@ section{
 
 }
 
-/*===========================
-    LOGO
-===========================*/
-
-.logo{
-
-    width:180px;
-
-    margin-bottom:30px;
-
-}
 
 /*===========================
     TITULOS
@@ -975,5 +964,314 @@ footer p{
         transform: translateY(0);
 
     }
+
+}
+
+.tv-container{
+
+max-width:1000px;
+
+margin:40px auto;
+
+background:#000;
+
+border:3px solid #d4af37;
+
+border-radius:15px;
+
+overflow:hidden;
+
+}
+
+
+.tv-container video{
+
+width:100%;
+
+display:block;
+
+}
+
+
+.leza-tv{
+
+text-align:center;
+
+}
+
+
+.logo{
+
+width:90px;
+
+height:90px;
+
+object-fit:contain;
+
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    margin: 20px auto;
+}
+
+.tv-container{
+
+    width:90%;
+    max-width:1100px;
+
+    margin:40px auto;
+
+    background:#000;
+
+    border:2px solid #D4AF37;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 0 30px rgba(212,175,55,.25);
+
+}
+
+.tv-container video{
+
+    width:100%;
+
+    display:block;
+
+    background:#000;
+
+}
+
+.status{
+
+    margin-top:25px;
+
+    color:#D4AF37;
+
+    font-size:18px;
+
+    text-align:center;
+
+}
+
+/*==========================
+        LEZA TV
+==========================*/
+
+.tv-container{
+
+    width:95%;
+    max-width:1200px;
+
+    margin:40px auto;
+
+    background:#000;
+
+    border:2px solid rgba(212,175,55,.35);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 0 35px rgba(0,0,0,.45);
+
+}
+
+.tv-container video{
+
+    display:block;
+
+    width:100%;
+
+    aspect-ratio:16/9;
+
+    background:#000;
+
+}
+
+.status{
+
+    margin-top:25px;
+
+    color:#D4AF37;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+.tv-container{
+
+    width:95%;
+    max-width:1200px;
+
+    margin:40px auto;
+
+    position:relative;
+
+}
+
+.tv-container video{
+
+    width:100%;
+
+    display:block;
+
+    border:2px solid #D4AF37;
+
+    border-radius:14px;
+
+    background:#000;
+
+}
+
+.status{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(0,0,0,.7);
+
+    color:#D4AF37;
+
+    font-size:22px;
+
+    border-radius:14px;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+/*==================================
+            LEZA TV
+===================================*/
+
+.tv-container{
+
+    width:95%;
+    max-width:1300px;
+
+    margin:50px auto;
+
+    position:relative;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:#000;
+
+    border:2px solid rgba(212,175,55,.35);
+
+    box-shadow:
+        0 0 45px rgba(212,175,55,.12),
+        0 20px 60px rgba(0,0,0,.45);
+
+}
+
+.tv-container video{
+
+    display:block;
+
+    width:100%;
+
+    aspect-ratio:16/9;
+
+    background:#000;
+
+}
+
+.live-badge{
+
+    position:absolute;
+
+    top:20px;
+
+    left:20px;
+
+    z-index:20;
+
+    background:#d40000;
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:40px;
+
+    font-weight:bold;
+
+    font-size:15px;
+
+    letter-spacing:1px;
+
+    animation:pulse 1.5s infinite;
+
+    box-shadow:0 0 20px rgba(255,0,0,.45);
+
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.status{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.75);
+
+    color:#D4AF37;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    backdrop-filter:blur(8px);
+
+    z-index:15;
 
 }
