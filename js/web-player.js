@@ -11,6 +11,10 @@ let comprobando = false;
 
 let apiBaseUrl = null;
 let streamBaseUrl = null;
+let espectadorRegistrado = false;
+
+const viewerId = crypto.randomUUID();
+let heartbeat = null;
 
 async function obtenerConfiguracion() {
 
@@ -39,6 +43,58 @@ async function obtenerConfiguracion() {
 
     apiBaseUrl = configuracion.api.replace(/\/$/, "");
     streamBaseUrl = configuracion.stream.replace(/\/$/, "");
+
+}
+
+async function registrarEspectador() {
+
+    if (espectadorRegistrado || !apiBaseUrl) return;
+
+    try {
+
+        await fetch(`${apiBaseUrl}/api/viewer/connect`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: viewerId
+            })
+        });
+
+        espectadorRegistrado = true;
+
+        heartbeat = setInterval(enviarHeartbeat, 30000);
+
+    } catch (e) {
+
+        console.error(e);
+
+    }
+
+}
+
+function desconectarEspectador() {
+
+    if (!espectadorRegistrado) return;
+
+    clearInterval(heartbeat);
+
+    navigator.sendBeacon(
+        `${apiBaseUrl}/api/viewer/disconnect`,
+        new Blob(
+            [
+                JSON.stringify({
+                    id: viewerId
+                })
+            ],
+            {
+                type: "application/json"
+            }
+        )
+    );
+
+    espectadorRegistrado = false;
 
 }
 
@@ -97,13 +153,17 @@ function cargarTransmision(streamKey) {
 
         video.src = hlsUrl;
 
-        video.play();
+        video.play().then(() => {
 
-        status.classList.add("hidden");
+            status.classList.add("hidden");
+
+            registrarEspectador();
+
+        }).catch(console.error);
 
         return;
 
-    }
+    }   
 
     reproduciendo = true;
 
@@ -129,11 +189,14 @@ function cargarTransmision(streamKey) {
 
             status.classList.add("hidden");
 
+            await registrarEspectador();
+
+            
         } catch (e) {
 
-            console.error(e);
+        console.error(e);
 
-        }
+    }
 
     });
 
@@ -238,9 +301,49 @@ async function comprobarTransmision() {
 
 }
 
+async function enviarHeartbeat() {
+
+    if (!espectadorRegistrado) return;
+
+    try {
+
+        await fetch(`${apiBaseUrl}/api/viewer/heartbeat`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: viewerId
+            })
+        });
+
+    } catch (e) {
+
+        console.error(e);
+
+    }
+
+}
+
 comprobarTransmision();
 
 setInterval(
     comprobarTransmision,
     10000
 );
+
+window.addEventListener("beforeunload", () => {
+
+    desconectarEspectador();
+
+});
+
+document.addEventListener("visibilitychange", () => {
+
+    if (document.visibilityState === "hidden") {
+
+        desconectarEspectador();
+
+    }
+
+});
