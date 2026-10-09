@@ -2,18 +2,25 @@ const CONFIG_URL =
 "https://gist.githubusercontent.com/lezaproduccionescine-hash/63a485bfecd6885e460cfca93b516285/raw/leza-tv-config.json";
 
 const liveBadge = document.getElementById("liveBadge");
+
 const video = document.getElementById("video");
+
 const status = document.getElementById("status");
 
 let hls = null;
+
 let reproduciendo = false;
+
 let comprobando = false;
 
 let apiBaseUrl = null;
+
 let streamBaseUrl = null;
+
 let espectadorRegistrado = false;
 
 const viewerId = crypto.randomUUID();
+
 let heartbeat = null;
 
 async function obtenerConfiguracion() {
@@ -64,6 +71,10 @@ async function registrarEspectador() {
 
         espectadorRegistrado = true;
 
+        await enviarHeartbeat();
+
+        clearInterval(heartbeat);
+
         heartbeat = setInterval(enviarHeartbeat, 30000);
 
     } catch (e) {
@@ -108,7 +119,7 @@ function detenerReproductor() {
     }
 
     liveBadge.classList.add("hidden");
-    
+
     video.pause();
 
     video.removeAttribute("src");
@@ -163,7 +174,7 @@ function cargarTransmision(streamKey) {
 
         return;
 
-    }   
+    }
 
     reproduciendo = true;
 
@@ -183,20 +194,19 @@ function cargarTransmision(streamKey) {
 
         try {
 
+            await registrarEspectador();
+
             await video.play();
 
             liveBadge.classList.remove("hidden");
 
             status.classList.add("hidden");
 
-            await registrarEspectador();
-
-            
         } catch (e) {
 
-        console.error(e);
+            console.error(e);
 
-    }
+        }
 
     });
 
@@ -236,9 +246,11 @@ async function comprobarTransmision() {
         );
 
         if (!respuesta.ok) {
+
             throw new Error(
                 `API HTTP ${respuesta.status}`
             );
+
         }
 
         const datos = await respuesta.json();
@@ -252,6 +264,7 @@ async function comprobarTransmision() {
             }
 
             status.classList.remove("hidden");
+
             status.textContent =
                 "🔴 Leza TV está fuera del aire.";
 
@@ -289,9 +302,10 @@ async function comprobarTransmision() {
         );
 
         status.classList.remove("hidden");
-        status.textContent =
-            "No se pudo conectar con Leza Server.";
 
+        
+        status.textContent =
+            "⚠️Leza TV no está transmitiendo. Si de lo contrario ve a alguien mirando Leza TV, avise del error a leza.producciones.cine@gmail.com";
     }
     finally {
 
@@ -343,6 +357,16 @@ document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
 
         desconectarEspectador();
+
+    }
+
+    if (document.visibilityState === "visible") {
+
+        if (reproduciendo && !espectadorRegistrado) {
+
+            registrarEspectador();
+
+        }
 
     }
 
