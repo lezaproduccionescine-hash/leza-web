@@ -190,24 +190,29 @@ function cargarTransmision(streamKey) {
 
     });
 
+    
     hls.on(Hls.Events.MANIFEST_PARSED, async () => {
-
         try {
+            liveBadge.classList.remove("hidden");
+            status.classList.add("hidden");
 
             await registrarEspectador();
 
-            await video.play();
-
-            liveBadge.classList.remove("hidden");
-
-            status.classList.add("hidden");
-
-        } catch (e) {
-
-            console.error(e);
-
+            video.play().catch(error => {
+                console.warn("La reproducción requiere interacción:", error);
+            });
+            } catch (e) {
+            console.error("Error iniciando el reproductor:", e);
         }
+    });
 
+    video.addEventListener("playing", () => {
+        status.classList.add("hidden");
+        liveBadge.classList.remove("hidden");
+    });
+
+    video.addEventListener("error", () => {
+        console.error("Error del video:", video.error);
     });
 
     hls.on(Hls.Events.ERROR, (event, data) => {
