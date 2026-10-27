@@ -329,3 +329,44 @@ a:focus-visible {
     stroke-width: 1.6;
     margin-bottom: 12px;
 }
+
+
+/* Pantalla inicial */
+#intro-logo {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #070707;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#intro-logo img {
+  width: 200px;
+  height: 200px;
+  max-width: 60vw;
+  max-height: 60vh;
+  object-fit: contain;
+  animation: logoEntrada 1s ease both;
+}
+
+#intro-logo.ocultar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes logoEntrada {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

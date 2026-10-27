@@ -1,486 +1,1175 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leza Producciones | Historias que cobran vida</title>
+  <meta name="description" content="Descubrí el universo de Leza Producciones: cine, radio, televisión, festivales y nuevas experiencias audiovisuales.">
+  <meta name="author" content="Leza Producciones">
+  <meta name="theme-color" content="#090909">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Leza Producciones">
+  <meta property="og:description" content="Cine, radio, televisión, festivales y nuevas experiencias audiovisuales.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lezaproducciones.com">
+  <meta property="og:image" content="https://lezaproducciones.com/assets/logo.png">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
 
-    <title>Leza Producciones</title>
-    <meta name="description" content="Mirá Leza TV en vivo. La televisión online de Leza Producciones.">
-    <meta name="author" content="Leza Producciones">
-    <meta name="theme-color" content="#090909">
-    <meta name="robots" content="index, follow">
+  <style>
+    :root {
+      color-scheme: dark;
+      --gold: #D4AF37;
+      --gold-light: #f4d879;
+      --bg: #070707;
+      --panel: #111;
+      --muted: #b5b5b5;
+      --line: #303030;
+    }
 
-    <meta property="og:title" content="Leza Producciones">
-    <meta property="og:description" content="Leza tv online de Leza Producciones.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lezaproducciones.com">
-    <meta property="og:image" content="https://lezaproducciones.com/assets/logo.png">
+    * {
+      box-sizing: border-box;
+    }
 
-    <link rel="icon" href="assets/logo.png" type="image/png">
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-    <style>
-        :root {
-            color-scheme: dark;
-            --gold: #D4AF37;
-            --bg: #090909;
-            --panel: #151515;
-            --border: #303030;
-            --muted: #aaa;
-        }
+    a {
+      color: inherit;
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    button {
+      font: inherit;
+    }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: var(--bg);
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 76px;
+      padding: 10px 4.6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      background: rgba(8, 8, 8, .94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #292929;
+    }
 
-        header {
-            min-height: 76px;
-            padding: 12px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-            background: #0d0d0d;
-            border-bottom: 1px solid #292929;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      min-width: max-content;
+    }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            color: var(--gold);
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+    .brand img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+    }
 
-        .brand img {
-            width: 43px;
-            height: 43px;
-            object-fit: contain;
-        }
+    .brand-name {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+      color: var(--gold);
+    }
 
-        nav {
-            display: flex;
-            gap: 7px;
-        }
+    .brand-sub {
+      display: block;
+      margin-top: 3px;
+      color: #bdbdbd;
+      font-size: 9px;
+      letter-spacing: 4px;
+      font-weight: 400;
+    }
 
-        .nav-button {
-            padding: 11px 17px;
-            color: #ddd;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: 7px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-        .nav-button:hover,
-        .nav-button.active {
-            color: var(--gold);
-            background: #1b180e;
-            border-color: #5b4a19;
-        }
+    .nav-link {
+      padding: 11px 14px;
+      border: 1px solid transparent;
+      border-radius: 30px;
+      background: transparent;
+      color: #ddd;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color .2s, border-color .2s, background .2s;
+    }
 
-        main {
-            width: 100%;
-            max-width: 1250px;
-            min-height: calc(100vh - 145px);
-            margin: 0 auto;
-            padding: 30px 22px 45px;
-        }
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--gold-light);
+      border-color: #574718;
+      background: #17140b;
+      outline: none;
+    }
 
-        .heading {
-            margin-bottom: 22px;
-        }
+    .nav-cta {
+      border: 1px solid #80691f;
+      border-radius: 30px;
+      padding: 10px 17px;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 12px;
+      white-space: nowrap;
+    }
 
-        .heading h1 {
-            margin: 0 0 8px;
-            font-size: clamp(27px, 4vw, 38px);
-        }
+    /* PORTADA CINEMATOGRÁFICA */
 
-        .heading p {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.6;
-        }
+    .hero {
+      position: relative;
+      isolation: isolate;
+      min-height: 460px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid #292929;
+      background: #080808;
+    }
 
-        .tv-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border: 1px solid #353535;
-            border-radius: 12px;
-            background: #000;
-            box-shadow: 0 12px 35px #0008;
-        }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0, 0, 0, .97) 0%,
+          rgba(0, 0, 0, .78) 34%,
+          rgba(0, 0, 0, .12) 75%,
+          rgba(0, 0, 0, .5) 100%
+        ),
+        linear-gradient(0deg, #080808 0%, transparent 35%),
+        url("https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=2200&q=85")
+        center 42% / cover;
+    }
 
-        video {
-            display: block;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: contain;
-            background: #000;
-        }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(
+        ellipse at 72% 45%,
+        rgba(212, 175, 55, .15),
+        transparent 42%
+      );
+      pointer-events: none;
+    }
 
-        .live-badge {
-            position: absolute;
-            z-index: 2;
-            top: 15px;
-            left: 15px;
-            padding: 7px 11px;
-            border-radius: 5px;
-            background: #b51f25;
-            color: #fff;
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: .5px;
-        }
+    .hero-content {
+      width: min(1240px, 100%);
+      margin: auto;
+      padding: 72px 5.2% 78px;
+    }
 
-        .status {
-            position: absolute;
-            z-index: 1;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 25px;
-            color: #ddd;
-            background: #050505;
-            text-align: center;
-            line-height: 1.6;
-            pointer-events: none;
-        }
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
 
-        .hidden {
-            display: none !important;
-        }
+    .hero h1 {
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(42px, 6.5vw, 82px);
+      line-height: .98;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+    }
 
-        .player-caption {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            margin-top: 15px;
-            color: var(--muted);
-            font-size: 13px;
-        }
+    .hero h1 span {
+      display: block;
+      color: var(--gold);
+    }
 
-        .gold-dot {
-            width: 8px;
-            height: 8px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: var(--gold);
-        }
+    .hero-copy {
+      max-width: 440px;
+      margin: 22px 0 26px;
+      color: #e1e1e1;
+      font-size: 16px;
+      line-height: 1.65;
+    }
 
-        #mas {
-            display: none;
-        }
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 21px;
+      border: 1px solid var(--gold);
+      border-radius: 30px;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      transition: background .2s, color .2s, transform .2s;
+    }
 
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
-            margin-top: 28px;
-        }
+    .primary-link:hover {
+      background: var(--gold);
+      color: #090909;
+      transform: translateY(-2px);
+    }
 
-        .social-card {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 13px;
-            padding: 25px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--panel);
-        }
+    .hero-index {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      padding-left: 20px;
+      border-left: 2px solid var(--gold);
+      display: grid;
+      gap: 14px;
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-align: right;
+    }
 
-        .social-icon {
-            color: var(--gold);
-            font-size: 29px;
-        }
+    /* SECCIONES */
 
-        .social-card h2 {
-            margin: 0;
-            font-size: 21px;
-        }
+    .section {
+      width: min(1400px, 100%);
+      margin: auto;
+      padding: 52px 4.6%;
+    }
 
-        .social-card p {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.6;
-        }
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
 
-        .social-link {
-            display: inline-block;
-            margin-top: 5px;
-            padding: 12px 17px;
-            border-radius: 7px;
-            background: var(--gold);
-            color: #111;
-            font-weight: bold;
-            text-decoration: none;
-        }
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
 
-        .social-link:hover {
-            background: #f0d36c;
-        }
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(26px, 3.3vw, 40px);
+      font-weight: 500;
+      letter-spacing: -.7px;
+    }
 
-        footer {
-            padding: 23px 15px;
-            border-top: 1px solid #292929;
-            color: var(--muted);
-            text-align: center;
-            font-size: 13px;
-        }
+    .section-heading h2 span {
+      color: var(--gold);
+    }
 
-        footer strong {
-            color: var(--gold);
-        }
+    .section-intro {
+      max-width: 360px;
+      padding-left: 18px;
+      border-left: 2px solid var(--gold);
+      color: #bdbdbd;
+      font-size: 13px;
+      line-height: 1.6;
+    }
 
-        @media (max-width: 600px) {
-            header {
-                padding: 12px;
-            }
+    /* TARJETAS QUE FUNCIONAN COMO BOTONES */
 
-            .brand {
-                gap: 7px;
-                font-size: 16px;
-            }
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
 
-            .brand img {
-                width: 34px;
-                height: 34px;
-            }
+    .experience-card {
+      position: relative;
+      display: flex;
+      min-height: 300px;
+      overflow: hidden;
+      isolation: isolate;
+      flex-direction: column;
+      justify-content: flex-end;
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      background: #121212;
+      text-decoration: none;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
 
-            .nav-button {
-                padding: 10px;
-                font-size: 13px;
-            }
+    .experience-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image: var(--card-image);
+      background-position: center;
+      background-size: cover;
+      transition: transform .6s cubic-bezier(.2, .7, .2, 1), filter .3s;
+      filter: saturate(.82);
+    }
 
-            main {
-                padding: 24px 12px 35px;
-            }
+    .experience-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(
+          0deg,
+          rgba(0, 0, 0, .98) 0%,
+          rgba(0, 0, 0, .76) 32%,
+          rgba(0, 0, 0, .12) 100%
+        ),
+        linear-gradient(120deg, rgba(212, 175, 55, .09), transparent 50%);
+    }
 
-            .social-grid {
-                grid-template-columns: 1fr;
-            }
+    .experience-card:hover,
+    .experience-card:focus-visible {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 35px #0009;
+      outline: none;
+    }
 
-            .social-card {
-                padding: 21px;
-            }
+    .experience-card:hover::before,
+    .experience-card:focus-visible::before {
+      transform: scale(1.07);
+      filter: saturate(1.1);
+    }
 
-            .tv-container {
-                border-radius: 8px;
-            }
+    .card-content {
+      padding: 22px 20px 20px;
+    }
 
-            video {
-                aspect-ratio: 16 / 9;
-            }
-        }
-    </style>
+    .card-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 13px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold-light);
+      font-size: 20px;
+    }
+
+    .card-title {
+      margin: 0 0 8px;
+      font-size: 15px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .card-description {
+      max-width: 270px;
+      margin: 0;
+      color: #c4c4c4;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .card-arrow {
+      position: absolute;
+      right: 18px;
+      bottom: 22px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #8d7424;
+      border-radius: 50%;
+      color: var(--gold-light);
+      transition: background .2s, color .2s;
+    }
+
+    .experience-card:hover .card-arrow {
+      background: var(--gold);
+      color: #090909;
+    }
+
+    /* NOVEDADES */
+
+    .news-section {
+      border-top: 1px solid #302916;
+      background: linear-gradient(180deg, #0a0a0a, #080808);
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .news-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #101010;
+    }
+
+    .news-image {
+      height: 145px;
+      background:
+        linear-gradient(0deg, #0006, #0000),
+        var(--news-image) center / cover;
+    }
+
+    .news-body {
+      padding: 17px;
+    }
+
+    .news-label {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .news-body h3 {
+      margin: 8px 0;
+      font-size: 17px;
+    }
+
+    .news-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* COMUNIDAD */
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .social-link {
+      padding: 10px 15px;
+      border: 1px solid #414141;
+      border-radius: 25px;
+      color: #ddd;
+      text-decoration: none;
+      font-size: 12px;
+      transition: border-color .2s, color .2s;
+    }
+
+    .social-link:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    /* PIE DE PÁGINA */
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 25px 4.6%;
+      border-top: 1px solid #292929;
+      color: #999;
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .footer-tagline {
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    /* REPRODUCTOR LEZA TV */
+
+    #tv-experience {
+      display: none;
+      min-height: 65vh;
+    }
+
+    #tv-experience.is-visible {
+      display: block;
+    }
+
+    #home-experience.is-hidden {
+      display: none;
+    }
+
+    .tv-heading {
+      padding: 38px 0 22px;
+    }
+
+    .tv-heading h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 42px);
+    }
+
+    .tv-heading p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tv-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid #353535;
+      border-radius: 10px;
+      background: #000;
+      box-shadow: 0 12px 35px #0008;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .live-badge {
+      position: absolute;
+      z-index: 2;
+      top: 15px;
+      left: 15px;
+      padding: 7px 11px;
+      border-radius: 5px;
+      background: #b51f25;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: .5px;
+    }
+
+    .status {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      color: #ddd;
+      background: #050505;
+      text-align: center;
+      line-height: 1.6;
+      pointer-events: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .player-caption {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 15px 0 32px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .gold-dot {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* TABLETS */
+
+    @media (max-width: 1000px) {
+      .experience-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .experience-card {
+        min-height: 310px;
+      }
+
+      .hero-index {
+        display: none;
+      }
+
+      .site-header {
+        padding-inline: 3%;
+      }
+
+      .nav-link {
+        padding: 10px;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+    }
+
+    /* CELULARES */
+
+    @media (max-width: 650px) {
+      .site-header {
+        position: relative;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 13px 16px;
+      }
+
+      .brand img {
+        width: 38px;
+        height: 38px;
+      }
+
+      .brand-name {
+        font-size: 16px;
+      }
+
+      nav {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .nav-link {
+        white-space: nowrap;
+        padding: 9px 12px;
+        font-size: 12px;
+      }
+
+      .hero {
+        min-height: 420px;
+      }
+
+      .hero-content {
+        padding: 65px 22px;
+      }
+
+      .hero h1 {
+        font-size: clamp(39px, 12vw, 58px);
+        letter-spacing: -1px;
+      }
+
+      .hero-copy {
+        font-size: 14px;
+      }
+
+      .section {
+        padding: 38px 16px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .section-intro {
+        max-width: none;
+      }
+
+      .experience-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .experience-card {
+        min-height: 280px;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-image {
+        height: 175px;
+      }
+
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 23px 16px;
+      }
+
+      .footer-tagline {
+        line-height: 1.8;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+        /* INTRO INICIAL LEZA PRODUCCIONES */
+    #intro-logo {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #070707;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 700ms ease, visibility 700ms ease;
+    }
+
+    #intro-logo img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    max-width: 60vw;
+    max-height: 60vh;
+    object-fit: contain;
+    animation: introAparecer 800ms ease both;
+    }
+
+    #intro-logo.ocultar {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    }
+
+    @keyframes introAparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+    }
+
+  </style>
 </head>
 
 <body>
 
-<header>
-    <div class="brand">
-        <img src="assets/logo.png" alt="Leza Producciones">
-        <span>Leza Producciones</span>
-    </div>
+<!-- INTRO: LOGO DURANTE 3 SEGUNDOS -->
+<div id="intro-logo">
+  <img src="assets/logo.png" alt="Leza Producciones">
+</div>
 
-    <nav aria-label="Navegación principal">
-        <button
-            type="button"
-            id="inicioBtn"
-            class="nav-button active"
-            aria-pressed="true"
-            onclick="mostrarSeccion('inicio')">
-            Inicio
-        </button>
+<script>
+  window.setTimeout(function () {
+    const intro = document.getElementById("intro-logo");
 
-        <button
-            type="button"
-            id="masBtn"
-            class="nav-button"
-            aria-pressed="false"
-            onclick="mostrarSeccion('mas')">
-            Más
-        </button>
-    </nav>
+    if (intro) {
+      intro.classList.add("ocultar");
+
+      window.setTimeout(function () {
+        intro.remove();
+        document.documentElement.style.overflow = "";
+      }, 750);
+    }
+  }, 3000);
+</script>
+
+
+
+<header class="site-header">
+  <a
+    class="brand"
+    href="#inicio"
+    aria-label="Leza Producciones, inicio"
+    onclick="volverInicio()"
+  >
+    <img src="assets/logo.png" alt="">
+    <span class="brand-name">
+      LEZA
+      <span class="brand-sub">PRODUCCIONES</span>
+    </span>
+  </a>
+
+  <nav aria-label="Navegación principal">
+    <a class="nav-link" href="#inicio" onclick="volverInicio()">Inicio</a>
+    <a class="nav-link" href="#universo" onclick="volverInicio()">Nuestro universo</a>
+    <a class="nav-link" href="#novedades" onclick="volverInicio()">Novedades</a>
+    <a class="nav-link" href="#comunidad" onclick="volverInicio()">Comunidad</a>
+  </nav>
+
+  <a class="nav-cta" href="#universo" onclick="volverInicio()">
+    ✦ Todo en un solo lugar
+  </a>
 </header>
 
-<main>
+<div id="home-experience">
 
-    <!-- REPRODUCTOR INTEGRADO -->
-    <section id="inicio">
-        <div class="heading">
-            <h1>Leza TV</h1>
-            <p>Transmisión oficial de Leza Producciones.</p>
+  <!-- PORTADA PRINCIPAL -->
+
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <p class="eyebrow">Leza Producciones presenta</p>
+
+      <h1>
+        Historias que
+        <span>cobran vida.</span>
+      </h1>
+
+      <p class="hero-copy">
+        Cine, radio, televisión, festivales y mucho más.
+        Un universo de contenido creado para inspirar,
+        emocionar y conectar.
+      </p>
+
+      <a class="primary-link" href="#universo">
+        ▷ &nbsp; EXPLORAR EL UNIVERSO
+      </a>
+    </div>
+
+    <div class="hero-index" aria-hidden="true">
+      <span>CINE</span>
+      <span>RADIO</span>
+      <span>TV</span>
+      <span>FESTIVALES</span>
+      <span>PRODUCCIÓN</span>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- UNIVERSO LEZA -->
+
+    <section class="section" id="universo">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Nuestro universo</p>
+          <h2>Explorá todas nuestras <span>experiencias</span></h2>
         </div>
 
-        <div class="tv-container">
-
-            <div id="liveBadge" class="live-badge hidden">
-                EN VIVO
-            </div>
-
-            <div id="status" class="status" role="status" aria-live="polite">
-                Conectando con Leza TV...
-            </div>
-
-            <video
-                id="video"
-                controls
-                autoplay
-                playsinline
-                preload="auto">
-            </video>
-
+        <div class="section-intro">
+          Cada proyecto tiene su propia identidad, pero todos forman
+          parte de lo mismo: <strong>Leza Producciones.</strong>
         </div>
+      </div>
 
-        <div class="player-caption">
-            <span class="gold-dot"></span>
-            <span>Televisión online de Leza Producciones</span>
-        </div>
+      <div class="experience-grid">
+
+        <!-- CINE -->
+
+        <a
+          class="experience-card"
+          href="https://www.youtube.com/channel/UCY_oIRWhsO_x2zheDbesxWQ"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="--card-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80')"
+          aria-label="Explorar cine y producciones en YouTube"
+        >
+          <div class="card-content">
+            <span class="card-icon" aria-hidden="true">◎</span>
+            <h3 class="card-title">Cine y producciones</h3>
+            <p class="card-description">
+              Películas, proyectos, tráilers y contenido original.
+            </p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <!-- RADIO -->
+
+        <a
+          class="experience-card"
+          href="https://radio.lezaproducciones.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="--card-image:url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=900&q=80')"
+          aria-label="Escuchar Leza Radio"
+        >
+          <div class="card-content">
+            <span class="card-icon" aria-hidden="true">〰</span>
+            <h3 class="card-title">Radio en vivo</h3>
+            <p class="card-description">
+              Música, información y programación en Leza Radio.
+            </p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <!-- LEZA TV -->
+
+        <a
+          class="experience-card"
+          href="#leza-tv"
+          onclick="abrirTV(event)"
+          style="--card-image:url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=900&q=80')"
+          aria-label="Entrar a la experiencia audiovisual de Leza TV"
+        >
+          <div class="card-content">
+            <span class="card-icon" aria-hidden="true">▷</span>
+            <h3 class="card-title">Experiencias audiovisuales</h3>
+            <p class="card-description">
+              Descubrí Leza TV y disfrutá de contenido audiovisual.
+            </p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <!-- LEZA FEST -->
+
+        <a
+          class="experience-card"
+          href="https://fest.lezaproducciones.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="--card-image:url('https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80')"
+          aria-label="Conocer Leza Fest"
+        >
+          <div class="card-content">
+            <span class="card-icon" aria-hidden="true">✧</span>
+            <h3 class="card-title">Leza Fest</h3>
+            <p class="card-description">
+              Eventos, novedades y nuevas propuestas audiovisuales.
+            </p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </a>
+
+      </div>
     </section>
 
-    <!-- CENTRO DE REDES -->
-    <section id="mas">
-        <div class="heading">
-            <h1>Más de Leza Producciones</h1>
-            <p>Encontrá nuestros canales oficiales.</p>
+    <!-- NOVEDADES -->
+
+    <section class="news-section" id="novedades">
+      <div class="section">
+
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Lo que está pasando</p>
+            <h2>Últimas <span>novedades</span></h2>
+          </div>
+
+          <div class="section-intro">
+            Un espacio preparado para destacar próximos estrenos,
+            anuncios y proyectos de Leza Producciones.
+          </div>
         </div>
 
-        <div class="social-grid">
+        <div class="news-grid">
 
-            <article class="social-card">
-                <span class="social-icon" aria-hidden="true">▶</span>
-                <h2>YouTube</h2>
-                <p>
-                    Seguinos en nuestro canal para ver
-                    videos, producciones y novedades.
-                </p>
-                <a
-                    class="social-link"
-                    href="https://www.youtube.com/channel/UCY_oIRWhsO_x2zheDbesxWQ"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Seguinos en YouTube
-                </a>
-            </article>
+          <article class="news-card">
+            <div
+              class="news-image"
+              style="--news-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80')"
+            ></div>
 
-            <article class="social-card">
-                <span class="social-icon" aria-hidden="true">💬</span>
-                <h2>WhatsApp</h2>
-                <p>
-                    Unite a nuestra comunidad y enterate
-                    de las novedades de Leza.
-                </p>
-                <a
-                    class="social-link"
-                    href="https://whatsapp.com/channel/0029Vb8x7m14inojK96Hgu0h"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Unite a WhatsApp
-                </a>
-                </article>
+            <div class="news-body">
+              <span class="news-label">Cine</span>
+              <h3>Historias en movimiento</h3>
+              <p>
+                Descubrí nuestros videos, producciones y próximos
+                proyectos en los canales oficiales.
+              </p>
+            </div>
+          </article>
 
-                <article class="social-card">
-                    
-                <i data-lucide="clapperboard" class="fest-icon"></i>
+          <article class="news-card">
+            <div
+              class="news-image"
+              style="--news-image:url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80')"
+            ></div>
 
-                
-                <h2>Leza Fest</h2>
+            <div class="news-body">
+              <span class="news-label">Radio</span>
+              <h3>La experiencia continúa</h3>
+              <p>
+                Conocé la programación y escuchá Leza Radio
+                desde su plataforma oficial.
+              </p>
+            </div>
+          </article>
 
-                <p>
-                    Descubrí LEZA FEST, nuestro festival de cine, y disfrutá de cortometrajes y nuevas propuestas audiovisuales.
-                </p>
+          <article class="news-card">
+            <div
+              class="news-image"
+              style="--news-image:url('https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=800&q=80')"
+            ></div>
 
-                <a
-                    class="social-link"
-                    href="https://fest.lezaproducciones.com/"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Más información
-                </a>
-
-               
-            </article>
-
-            <article class="social-card">
-                <span class="social-icon" aria-hidden="true">▶</span>
-                <h2>Leza Radio</h2>
-                <p>
-                    escucha leza radio, la radio oficial de leza producciones.
-                </p>
-                <a
-                    class="social-link"
-                    href="https://radio.lezaproducciones.com/"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Escucha nuestra radio
-                </a>
-            </article>
-
-
-                
-
-            </article>
+            <div class="news-body">
+              <span class="news-label">Festival</span>
+              <h3>El universo Leza Fest</h3>
+              <p>
+                Visitá el sitio del festival para conocer
+                sus novedades y propuestas.
+              </p>
+            </div>
+          </article>
 
         </div>
+
+        <!-- COMUNIDAD -->
+
+        <div class="social-row" id="comunidad">
+          <a
+            class="social-link"
+            href="https://www.youtube.com/channel/UCY_oIRWhsO_x2zheDbesxWQ"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ▶ YouTube
+          </a>
+
+          <a
+            class="social-link"
+            href="https://whatsapp.com/channel/0029Vb8x7m14inojK96Hgu0h"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ◉ Comunidad de WhatsApp
+          </a>
+
+          <a
+            class="social-link"
+            href="https://radio.lezaproducciones.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ♫ Leza Radio
+          </a>
+
+          <a
+            class="social-link"
+            href="https://fest.lezaproducciones.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ✧ Leza Fest
+          </a>
+        </div>
+
+      </div>
     </section>
 
-</main>
+  </main>
+</div>
+
+<!-- REPRODUCTOR: SE MUESTRA AL ELEGIR SU TARJETA -->
+
+<section class="section" id="tv-experience" aria-labelledby="tv-title">
+  <div class="tv-heading">
+    <p class="section-kicker">Experiencias audiovisuales</p>
+    <h1 id="tv-title">Leza TV</h1>
+    <p>La televisión online de Leza Producciones.</p>
+  </div>
+
+  <div class="tv-container">
+    <div id="liveBadge" class="live-badge hidden">EN VIVO</div>
+
+    <div id="status" class="status" role="status" aria-live="polite">
+      Conectando con Leza TV...
+    </div>
+
+    <video id="video" controls playsinline preload="auto"></video>
+  </div>
+
+  <div class="player-caption">
+    <span class="gold-dot"></span>
+    <span>Transmisión oficial de Leza Producciones</span>
+  </div>
+
+  <a class="back-link" href="#inicio" onclick="volverInicio()">
+    ← Volver al universo Leza
+  </a>
+</section>
 
 <footer>
-    <strong>LEZA TV</strong>
+  <div>
+    <strong>LEZA PRODUCCIONES</strong>
     <p>© 2026 Leza Producciones. Todos los derechos reservados.</p>
+  </div>
+
+  <div class="footer-tagline">
+    Creamos contenido · Conectamos personas · Hacemos realidad tus ideas
+  </div>
 </footer>
 
 <script>
-    function mostrarSeccion(seccion) {
-        const mostrarInicio = seccion === "inicio";
-
-        document.getElementById("inicio").style.display =
-            mostrarInicio ? "block" : "none";
-
-        document.getElementById("mas").style.display =
-            mostrarInicio ? "none" : "block";
-
-        document.getElementById("inicioBtn").classList.toggle(
-            "active", mostrarInicio
-        );
-
-        document.getElementById("masBtn").classList.toggle(
-            "active", !mostrarInicio
-        );
-
-        document.getElementById("inicioBtn").setAttribute(
-            "aria-pressed", String(mostrarInicio)
-        );
-
-        document.getElementById("masBtn").setAttribute(
-            "aria-pressed", String(!mostrarInicio)
-        );
-
-        window.scrollTo({ top: 0, behavior: "smooth" });
+  function abrirTV(event) {
+    if (event) {
+      event.preventDefault();
     }
+
+    document.getElementById("home-experience").classList.add("is-hidden");
+    document.getElementById("tv-experience").classList.add("is-visible");
+
+    history.replaceState(null, "", "#leza-tv");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  function volverInicio() {
+    document.getElementById("home-experience").classList.remove("is-hidden");
+    document.getElementById("tv-experience").classList.remove("is-visible");
+  }
+
+  window.addEventListener("load", function () {
+    if (location.hash === "#leza-tv") {
+      abrirTV();
+    }
+  });
 </script>
 
-<!-- Se conserva el sistema de transmisión existente -->
+<!-- Se conserva el reproductor existente -->
 <script src="js/web-player.js"></script>
+
+<!-- INICIO DE LA ANIMACIÓN -->
+<script>
+  // Duración de la pantalla inicial: 3000 milisegundos (3 segundos).
+  window.LEZA_INTRO_DURACION = 3000;
+</script>
+
+<!-- CARGA DEL CONTROLADOR DE LA ANIMACIÓN -->
+<script src="js/animacion.js"></script>
+
+</body>
+</html>
 
 </body>
 </html>
