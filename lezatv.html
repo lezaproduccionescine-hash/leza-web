@@ -3,74 +3,2541 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Leza TV | En Vivo</title>
+    <title>Leza TV | Leza Producciones</title>
 
-<link rel="stylesheet" href="css/styles.css">
+    <link
+        rel="icon"
+        href="assets/icon.ico"
+    >
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
+    <!-- HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            background: #050505;
+            color: #ffffff;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+            min-height: 100vh;
+        }
+
+
+        /* ===========================
+           HEADER
+        =========================== */
+
+        header {
+            width: 100%;
+            padding:
+                18px
+                6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom:
+                1px solid
+                rgba(212, 175, 55, 0.25);
+            background: #080808;
+        }
+
+
+        .logo {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+
+        .volver {
+            color: #ffffff;
+            text-decoration: none;
+            padding:
+                10px
+                16px;
+            border:
+                1px solid
+                #d4af37;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+
+        .volver:hover {
+            background: #d4af37;
+            color: #000000;
+        }
+
+
+        /* ===========================
+           CONTENEDOR PRINCIPAL
+        =========================== */
+
+        main {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding:
+                50px
+                20px
+                80px;
+        }
+
+
+        .titulo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+
+        .titulo h1 {
+            font-size: 38px;
+            color: #d4af37;
+        }
+
+
+        .titulo p {
+            margin-top: 10px;
+            color: #aaaaaa;
+        }
+
+
+        /* ===========================
+           BOTONES DE TRANSMISIÓN
+        =========================== */
+
+        .selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin:
+                35px
+                0;
+            flex-wrap: wrap;
+        }
+
+
+        .selector button {
+            background: #111111;
+            color: #ffffff;
+            border:
+                1px solid
+                #333333;
+            padding:
+                13px
+                25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+
+        .selector button:hover {
+            border-color: #d4af37;
+        }
+
+
+        .selector button.active {
+            background: #d4af37;
+            color: #000000;
+            border-color: #d4af37;
+        }
+
+
+        /* ===========================
+           TRANSMISIÓN
+        =========================== */
+
+        .transmision {
+            background: #0d0d0d;
+            border:
+                1px solid
+                #242424;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+
+        .video-container {
+            width: 100%;
+            background: #000000;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000000;
+        }
+
+
+        .player-status {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background:
+                rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            padding:
+                9px
+                14px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+
+        .informacion {
+            padding: 25px;
+        }
+
+
+        .informacion h2 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+
+        .informacion p {
+            color: #aaaaaa;
+            line-height: 1.6;
+        }
+
+
+        /* ===========================
+           ESTADO DEL SERVIDOR
+        =========================== */
+
+        .estado {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+
+        .server-status {
+            padding:
+                9px
+                16px;
+            border-radius: 30px;
+            font-size: 14px;
+            background: #151515;
+        }
+
+
+        .online {
+            color: #4ade80;
+        }
+
+
+        .offline {
+            color: #ff5555;
+        }
+
+
+        /* ===========================
+           ACCESO SOCIOS
+        =========================== */
+
+        #socios-section {
+            display: none;
+        }
+
+
+        .socios-acceso {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #0d0d0d;
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+        }
+
+
+        .socios-acceso h2 {
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+
+        .socios-acceso p {
+            color: #aaaaaa;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+
+        .socios-acceso input {
+            width: 100%;
+            background: #070707;
+            border:
+                1px solid
+                #333333;
+            color: #ffffff;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 18px;
+            outline: none;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+
+        .socios-acceso input:focus {
+            border-color: #d4af37;
+        }
+
+
+        .socios-acceso button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            background: #d4af37;
+            color: #000000;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+
+        .socios-acceso button:hover {
+            opacity: 0.9;
+        }
+
+
+        .socios-acceso button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+
+        .mensaje-socios {
+            min-height: 25px;
+            margin-top: 15px;
+            color: #aaaaaa;
+        }
+
+
+        /* ===========================
+           REPRODUCTOR SOCIOS
+        =========================== */
+
+        #socios-player-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+
+        .socio-autorizado {
+            color: #4ade80;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+
+        /* ===========================
+           FOOTER
+        =========================== */
+
+        footer {
+            text-align: center;
+            color: #666666;
+            padding: 30px;
+            border-top:
+                1px solid
+                #151515;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .titulo h1 {
+                font-size: 28px;
+            }
+
+
+            header {
+                padding:
+                    15px
+                    20px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .volver {
+                padding:
+                    8px
+                    12px;
+            }
+
+
+            .player-status {
+                bottom: 10px;
+                left: 10px;
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<header>
 
-<nav class="navbar">
+    <!-- ===========================
+         HEADER
+    =========================== -->
 
-<div class="brand">
+    <header>
 
-<img src="assets/logo.png" alt="Leza Producciones">
+        <a
+            href="index.html"
+            class="logo"
+        >
+            LEZA PRODUCCIONES
+        </a>
 
-<span>LEZA PRODUCCIONES</span>
 
-</div>
+        <a
+            href="index.html"
+            class="volver"
+        >
+            ← Volver
+        </a>
 
-<div>
+    </header>
 
-<a href="index.html">Inicio</a>
 
-<a href="index.html#descargas">⬇ Descargas</a>
 
-</div>
+    <!-- ===========================
+         CONTENIDO
+    =========================== -->
 
-</nav>
+    <main>
 
-</header>
 
-<section>
+        <div class="titulo">
 
-<h1>LEZA TV</h1>
+            <h1>LEZA TV</h1>
 
-<p class="subtitle">
-Transmisión oficial de Leza Producciones
-</p>
+            <p>
+                Transmisiones en vivo de
+                Leza Producciones.
+            </p>
 
-<div class="tv-container">
+        </div>
 
-<div id="liveBadge" class="live-badge hidden">
-    🔴 EN VIVO
-</div>
 
-<div id="status" class="status">
-    Conectando con Leza TV...
-</div>
 
-<video
-    id="video"
-    controls
-    autoplay
-    playsinline>
-</video>
+        <!-- ===========================
+             SELECTOR
+        =========================== -->
 
-</div>>
+        <div class="selector">
 
-</section>
+            <button
+                id="btn-oficial"
+                class="active"
+                type="button"
+                onclick="mostrarOficial()"
+            >
+                📺 LEZA TV
+            </button>
 
-<script src="js/web-player.js"></script>
+
+            <button
+                id="btn-socios"
+                type="button"
+                onclick="mostrarSocios()"
+            >
+                🔒 LEZA TV SOCIOS
+            </button>
+
+        </div>
+
+
+
+        <!-- ===========================
+             TRANSMISIÓN OFICIAL
+        =========================== -->
+
+        <section
+            id="oficial-section"
+            class="transmision"
+        >
+
+            <div class="video-container">
+
+                <video
+                    id="official-player"
+                    controls
+                    playsinline
+                    muted
+                ></video>
+
+
+                <div
+                    id="official-status"
+                    class="player-status"
+                >
+                    ⚫ Conectando con Leza Server...
+                </div>
+
+            </div>
+
+
+            <div class="informacion">
+
+                <h2>Leza TV</h2>
+
+                <p>
+                    Transmisión oficial de
+                    Leza Producciones.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===========================
+             ACCESO SOCIOS
+        =========================== -->
+
+        <section
+            id="socios-section"
+        >
+
+
+            <!-- ===========================
+                 VERIFICACIÓN
+            =========================== -->
+
+            <div
+                class="socios-acceso"
+                id="socios-verificacion"
+            >
+
+                <h2>
+                    🔒 LEZA TV SOCIOS
+                </h2>
+
+
+                <p>
+
+                    Esta transmisión es exclusiva
+                    para socios y miembros autorizados
+                    de Leza Producciones.
+
+                    <br><br>
+
+                    Ingresá tu código de 5 dígitos
+                    para verificar tu acceso.
+
+                </p>
+
+
+                <input
+                    type="text"
+                    id="codigoSocio"
+                    maxlength="5"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    placeholder="Ingresá tu código de socio"
+                >
+
+
+                <button
+                    id="btn-verificar-socio"
+                    type="button"
+                    onclick="verificarSocio()"
+                >
+                    Verificar
+                </button>
+
+
+                <div
+                    id="mensajeSocio"
+                    class="mensaje-socios"
+                ></div>
+
+            </div>
+
+
+
+            <!-- ===========================
+                 REPRODUCTOR SOCIOS
+            =========================== -->
+
+            <div
+                id="socios-player-section"
+                class="transmision"
+            >
+
+                <div class="video-container">
+
+                    <video
+                        id="socios-player"
+                        controls
+                        playsinline
+                        muted
+                    ></video>
+
+
+                    <div
+                        id="socios-status"
+                        class="player-status"
+                    >
+                        ⚫ Esperando transmisión...
+                    </div>
+
+                </div>
+
+
+                <div class="informacion">
+
+                    <h2>
+                        🔒 Leza TV Socios
+                    </h2>
+
+
+                    <p>
+                        Transmisión exclusiva
+                        para socios y miembros
+                        autorizados de
+                        Leza Producciones.
+                    </p>
+
+
+                    <div
+                        id="nombre-socio-autorizado"
+                        class="socio-autorizado"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===========================
+             ESTADO DEL SERVIDOR
+        =========================== -->
+
+        <div class="estado">
+
+            <div
+                id="server-status"
+                class="server-status"
+            >
+                ● Conectando...
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ===========================
+         FOOTER
+    =========================== -->
+
+    <footer>
+        © Leza Producciones
+    </footer>
+
+
+
+    <script>
+
+        /* ===========================
+           CONFIGURACIÓN
+        =========================== */
+
+
+        const API_BASE =
+            "https://api.lezaproducciones.com";
+
+
+        const STREAM_BASE =
+            "https://stream.lezaproducciones.com";
+
+
+        /*
+            API correcta de Leza Socios.
+
+            Los códigos NO están fijados.
+
+            Se consulta dinámicamente:
+
+            /api/personas/CODIGO
+        */
+
+        const API_SOCIOS =
+            "https://leza-socios-api.lezafest.workers.dev";
+
+
+        /*
+            video.mp4 debe estar dentro de:
+
+            leza-web/video.mp4
+
+            junto a:
+
+            leza-web/lezatv.html
+        */
+
+        const VIDEO_ESPERA =
+            "./video.mp4";
+
+
+        /* ===========================
+           VARIABLES HLS
+        =========================== */
+
+
+        let officialHls = null;
+
+        let sociosHls = null;
+
+
+        let officialStreamUrl = null;
+
+        let sociosStreamUrl = null;
+
+
+        let accesoSociosAutorizado =
+            false;
+
+
+        let personaAutorizada =
+            null;
+
+
+        /* ===========================
+           CAMBIAR SECCIÓN
+        =========================== */
+
+
+        function mostrarOficial() {
+
+            const oficialSection =
+                document.getElementById(
+                    "oficial-section"
+                );
+
+            const sociosSection =
+                document.getElementById(
+                    "socios-section"
+                );
+
+            const botonOficial =
+                document.getElementById(
+                    "btn-oficial"
+                );
+
+            const botonSocios =
+                document.getElementById(
+                    "btn-socios"
+                );
+
+
+            if (oficialSection) {
+                oficialSection.style.display =
+                    "block";
+            }
+
+
+            if (sociosSection) {
+                sociosSection.style.display =
+                    "none";
+            }
+
+
+            if (botonOficial) {
+                botonOficial.classList.add(
+                    "active"
+                );
+            }
+
+
+            if (botonSocios) {
+                botonSocios.classList.remove(
+                    "active"
+                );
+            }
+
+        }
+
+
+
+        function mostrarSocios() {
+
+            const oficialSection =
+                document.getElementById(
+                    "oficial-section"
+                );
+
+            const sociosSection =
+                document.getElementById(
+                    "socios-section"
+                );
+
+            const botonOficial =
+                document.getElementById(
+                    "btn-oficial"
+                );
+
+            const botonSocios =
+                document.getElementById(
+                    "btn-socios"
+                );
+
+
+            if (oficialSection) {
+                oficialSection.style.display =
+                    "none";
+            }
+
+
+            if (sociosSection) {
+                sociosSection.style.display =
+                    "block";
+            }
+
+
+            if (botonSocios) {
+                botonSocios.classList.add(
+                    "active"
+                );
+            }
+
+
+            if (botonOficial) {
+                botonOficial.classList.remove(
+                    "active"
+                );
+            }
+
+
+            if (accesoSociosAutorizado) {
+
+                abrirTransmisionSocios();
+
+            } else {
+
+                const verificacion =
+                    document.getElementById(
+                        "socios-verificacion"
+                    );
+
+                const reproductor =
+                    document.getElementById(
+                        "socios-player-section"
+                    );
+
+
+                if (verificacion) {
+                    verificacion.style.display =
+                        "block";
+                }
+
+
+                if (reproductor) {
+                    reproductor.style.display =
+                        "none";
+                }
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           OBTENER RUTA HLS
+        =========================== */
+
+
+        function obtenerRutaHLS(
+            datos,
+            rutaPredeterminada
+        ) {
+
+            /*
+                Si el servidor devuelve
+                directamente una URL HLS,
+                la usamos.
+            */
+
+            if (
+                datos &&
+                typeof datos.hls === "string" &&
+                datos.hls.trim() !== ""
+            ) {
+                return datos.hls.trim();
+            }
+
+
+            if (
+                datos &&
+                typeof datos.hlsUrl === "string" &&
+                datos.hlsUrl.trim() !== ""
+            ) {
+                return datos.hlsUrl.trim();
+            }
+
+
+            /*
+                Si no existe streamKey,
+                no existe transmisión.
+            */
+
+            if (
+                !datos ||
+                !datos.streamKey
+            ) {
+                return null;
+            }
+
+
+            /*
+                Rutas:
+
+                Oficial:
+                /live/STREAM_KEY/index.m3u8
+
+                Socios:
+                /socios/STREAM_KEY/index.m3u8
+
+                Si el servidor devuelve "ruta",
+                se utiliza automáticamente.
+            */
+
+            const ruta =
+                datos.ruta ||
+                rutaPredeterminada;
+
+
+            return (
+                `${STREAM_BASE}/` +
+                `${ruta}/` +
+                `${encodeURIComponent(
+                    datos.streamKey
+                )}/` +
+                `index.m3u8`
+            );
+
+        }
+
+
+
+        /* ===========================
+           ESTADO VISUAL DEL PLAYER
+        =========================== */
+
+
+        function actualizarEstadoVisualReproductor(
+            tipo,
+            texto
+        ) {
+
+            const id =
+                tipo === "oficial"
+                    ? "official-status"
+                    : "socios-status";
+
+
+            const estado =
+                document.getElementById(id);
+
+
+            if (estado) {
+                estado.textContent = texto;
+            }
+
+        }
+
+
+
+        /* ===========================
+           DESTRUIR HLS
+        =========================== */
+
+
+        function destruirHLS(tipo) {
+
+            if (tipo === "oficial") {
+
+                if (officialHls) {
+
+                    try {
+                        officialHls.destroy();
+                    } catch (error) {
+                        console.error(
+                            "Error cerrando HLS oficial:",
+                            error
+                        );
+                    }
+
+                    officialHls = null;
+                }
+
+                officialStreamUrl = null;
+
+            } else {
+
+                if (sociosHls) {
+
+                    try {
+                        sociosHls.destroy();
+                    } catch (error) {
+                        console.error(
+                            "Error cerrando HLS socios:",
+                            error
+                        );
+                    }
+
+                    sociosHls = null;
+                }
+
+                sociosStreamUrl = null;
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           VIDEO DE ESPERA
+        =========================== */
+
+
+        function reproducirVideoEspera(
+            tipo,
+            mensaje = "⚫ Fuera del aire"
+        ) {
+
+            const videoId =
+                tipo === "oficial"
+                    ? "official-player"
+                    : "socios-player";
+
+
+            const video =
+                document.getElementById(videoId);
+
+
+            if (!video) {
+
+                console.error(
+                    `No se encontró el reproductor: ${videoId}`
+                );
+
+                return;
+            }
+
+
+            /*
+                Si video.mp4 ya está cargado,
+                no volvemos a reiniciarlo
+                cada vez que se actualiza la API.
+            */
+
+            if (
+                video.dataset.modo === "espera" &&
+                video.currentSrc &&
+                video.currentSrc.includes("video.mp4")
+            ) {
+
+                actualizarEstadoVisualReproductor(
+                    tipo,
+                    mensaje
+                );
+
+                return;
+            }
+
+
+            console.log(
+                `Reproduciendo video de espera (${tipo}):`,
+                new URL(
+                    VIDEO_ESPERA,
+                    window.location.href
+                ).href
+            );
+
+
+            /*
+                Destruimos únicamente HLS.
+
+                NO llamamos a detenerReproductor()
+                después de iniciar video.mp4.
+            */
+
+            destruirHLS(tipo);
+
+
+            video.dataset.modo =
+                "espera";
+
+
+            /*
+                Quitamos la fuente anterior.
+            */
+
+            video.pause();
+
+            video.removeAttribute("src");
+
+
+            /*
+                Limpiamos handlers antiguos.
+            */
+
+            video.oncanplay = null;
+
+            video.onerror = null;
+
+
+            /*
+                Configuración del video de espera.
+            */
+
+            video.src =
+                VIDEO_ESPERA;
+
+            video.loop =
+                true;
+
+            video.muted =
+                true;
+
+            video.autoplay =
+                true;
+
+            video.playsInline =
+                true;
+
+
+            actualizarEstadoVisualReproductor(
+                tipo,
+                mensaje
+            );
+
+
+            video.oncanplay = function () {
+
+                /*
+                    Confirmamos que sigue
+                    siendo el video de espera.
+                */
+
+                if (
+                    video.dataset.modo !==
+                    "espera"
+                ) {
+                    return;
+                }
+
+
+                video.play()
+                    .then(() => {
+
+                        console.log(
+                            `Video de espera reproduciéndose: ${tipo}`
+                        );
+
+                    })
+                    .catch(error => {
+
+                        /*
+                            AbortError es normal si
+                            justo comenzó una transmisión.
+                        */
+
+                        if (
+                            error &&
+                            error.name !==
+                            "AbortError"
+                        ) {
+
+                            console.log(
+                                "El navegador requiere interacción para reproducir:",
+                                error
+                            );
+
+                        }
+
+                    });
+
+            };
+
+
+            video.onerror = function () {
+
+                console.error(
+                    "================================"
+                );
+
+                console.error(
+                    "ERROR CARGANDO VIDEO DE ESPERA"
+                );
+
+                console.error(
+                    "Tipo:",
+                    tipo
+                );
+
+                console.error(
+                    "Ruta:",
+                    video.currentSrc ||
+                    video.src
+                );
+
+                console.error(
+                    "Código:",
+                    video.error?.code
+                );
+
+                console.error(
+                    "Mensaje:",
+                    video.error?.message
+                );
+
+                console.error(
+                    "================================"
+                );
+
+            };
+
+
+            /*
+                Cargamos una única vez.
+            */
+
+            video.load();
+
+        }
+
+
+
+        /* ===========================
+           DETENER REPRODUCTOR
+        =========================== */
+
+
+        function detenerReproductor(
+            tipo
+        ) {
+
+            const videoId =
+                tipo === "oficial"
+                    ? "official-player"
+                    : "socios-player";
+
+
+            const video =
+                document.getElementById(videoId);
+
+
+            destruirHLS(tipo);
+
+
+            if (video) {
+
+                video.dataset.modo =
+                    "detenido";
+
+                video.pause();
+
+                video.oncanplay = null;
+
+                video.onerror = null;
+
+                video.removeAttribute("src");
+
+                video.load();
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           CARGAR HLS
+        =========================== */
+
+
+        function cargarHLS(
+            video,
+            url,
+            tipo
+        ) {
+
+            if (!video || !url) {
+                return;
+            }
+
+
+            /*
+                No recargar la misma transmisión.
+            */
+
+            if (
+                tipo === "oficial" &&
+                officialStreamUrl === url &&
+                officialHls
+            ) {
+                return;
+            }
+
+
+            if (
+                tipo === "socios" &&
+                sociosStreamUrl === url &&
+                sociosHls
+            ) {
+                return;
+            }
+
+
+            /*
+                Cerramos el HLS anterior.
+            */
+
+            destruirHLS(tipo);
+
+
+            video.pause();
+
+            video.oncanplay = null;
+
+            video.onerror = null;
+
+            video.dataset.modo =
+                "transmision";
+
+            video.removeAttribute("src");
+
+            video.load();
+
+
+            if (tipo === "oficial") {
+
+                officialStreamUrl =
+                    url;
+
+            } else {
+
+                sociosStreamUrl =
+                    url;
+
+            }
+
+
+            console.log(
+                `Cargando transmisión ${tipo}:`,
+                url
+            );
+
+
+            /* ===========================
+               HLS.JS
+            =========================== */
+
+            if (
+                window.Hls &&
+                Hls.isSupported()
+            ) {
+
+                const hls =
+                    new Hls({
+
+                        enableWorker:
+                            true,
+
+                        lowLatencyMode:
+                            true
+
+                    });
+
+
+                if (tipo === "oficial") {
+                    officialHls = hls;
+                } else {
+                    sociosHls = hls;
+                }
+
+
+                hls.loadSource(url);
+
+                hls.attachMedia(video);
+
+
+                hls.on(
+                    Hls.Events.MANIFEST_PARSED,
+                    () => {
+
+                        /*
+                            Verificamos que este
+                            HLS siga siendo el actual.
+                        */
+
+                        if (
+                            video.dataset.modo !==
+                            "transmision"
+                        ) {
+                            return;
+                        }
+
+
+                        actualizarEstadoVisualReproductor(
+                            tipo,
+                            "🟢 Transmisión en vivo"
+                        );
+
+
+                        /*
+                            Restauramos el sonido
+                            para una transmisión real.
+                        */
+
+                        video.muted =
+                            false;
+
+
+                        video.play()
+                            .catch(() => {
+
+                                actualizarEstadoVisualReproductor(
+                                    tipo,
+                                    "🟡 Presioná reproducir para ver la transmisión"
+                                );
+
+                            });
+
+                    }
+                );
+
+
+                hls.on(
+                    Hls.Events.ERROR,
+                    (
+                        event,
+                        data
+                    ) => {
+
+                        console.error(
+                            `Error HLS ${tipo}:`,
+                            data
+                        );
+
+
+                        /*
+                            Los errores no fatales
+                            pueden recuperarse solos.
+                        */
+
+                        if (!data.fatal) {
+                            return;
+                        }
+
+
+                        /*
+                            Verificamos que este
+                            reproductor siga activo.
+                        */
+
+                        if (
+                            video.dataset.modo !==
+                            "transmision"
+                        ) {
+                            return;
+                        }
+
+
+                        console.error(
+                            `Error fatal HLS ${tipo}:`,
+                            data.details
+                        );
+
+
+                        destruirHLS(tipo);
+
+
+                        /*
+                            Cambiamos al video
+                            fuera del aire.
+                        */
+
+                        reproducirVideoEspera(
+                            tipo,
+                            "⚫ La transmisión está fuera del aire."
+                        );
+
+                    }
+                );
+
+
+                return;
+
+            }
+
+
+            /* ===========================
+               HLS NATIVO
+            =========================== */
+
+            if (
+                video.canPlayType(
+                    "application/vnd.apple.mpegurl"
+                )
+            ) {
+
+                video.src =
+                    url;
+
+
+                video.addEventListener(
+                    "loadedmetadata",
+                    () => {
+
+                        if (
+                            video.dataset.modo !==
+                            "transmision"
+                        ) {
+                            return;
+                        }
+
+
+                        actualizarEstadoVisualReproductor(
+                            tipo,
+                            "🟢 Transmisión en vivo"
+                        );
+
+
+                        video.muted =
+                            false;
+
+
+                        video.play()
+                            .catch(() => {
+
+                                actualizarEstadoVisualReproductor(
+                                    tipo,
+                                    "🟡 Presioná reproducir para ver la transmisión"
+                                );
+
+                            });
+
+                    },
+                    {
+                        once: true
+                    }
+                );
+
+
+                video.onerror = function () {
+
+                    if (
+                        video.dataset.modo ===
+                        "transmision"
+                    ) {
+
+                        reproducirVideoEspera(
+                            tipo,
+                            "⚫ La transmisión está fuera del aire."
+                        );
+
+                    }
+
+                };
+
+
+                return;
+
+            }
+
+
+            actualizarEstadoVisualReproductor(
+                tipo,
+                "🔴 Este navegador no soporta HLS."
+            );
+
+        }
+
+
+
+        /* ===========================
+           ESTADO DEL SERVIDOR
+        =========================== */
+
+
+        function actualizarEstadoServidor(
+            conectado
+        ) {
+
+            const serverStatus =
+                document.getElementById(
+                    "server-status"
+                );
+
+
+            if (!serverStatus) {
+                return;
+            }
+
+
+            if (conectado) {
+
+                serverStatus.textContent =
+                    "● Online";
+
+                serverStatus.classList.remove(
+                    "offline"
+                );
+
+                serverStatus.classList.add(
+                    "online"
+                );
+
+            } else {
+
+                serverStatus.textContent =
+                    "● Desconectado";
+
+                serverStatus.classList.remove(
+                    "online"
+                );
+
+                serverStatus.classList.add(
+                    "offline"
+                );
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           ACTUALIZAR OFICIAL
+        =========================== */
+
+
+        async function actualizarOficial() {
+
+            try {
+
+                const respuesta =
+                    await fetch(
+                        `${API_BASE}/api/status?t=${Date.now()}`,
+                        {
+                            cache:
+                                "no-store"
+                        }
+                    );
+
+
+                if (!respuesta.ok) {
+
+                    throw new Error(
+                        `HTTP ${respuesta.status}`
+                    );
+
+                }
+
+
+                const datos =
+                    await respuesta.json();
+
+
+                console.log(
+                    "Estado oficial:",
+                    datos
+                );
+
+
+                actualizarEstadoServidor(
+                    true
+                );
+
+
+                /*
+                    Si OBS no está transmitiendo
+                    mostramos video.mp4.
+                */
+
+                if (
+                    !datos.streamKey ||
+                    datos.obs !== "online"
+                ) {
+
+                    reproducirVideoEspera(
+                        "oficial",
+                        "⚫ Leza TV está fuera del aire."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                    Stream key dinámica.
+                */
+
+                const streamUrl =
+                    obtenerRutaHLS(
+                        datos,
+                        "live"
+                    );
+
+
+                if (!streamUrl) {
+
+                    reproducirVideoEspera(
+                        "oficial",
+                        "⚫ No hay transmisión disponible."
+                    );
+
+                    return;
+
+                }
+
+
+                actualizarEstadoVisualReproductor(
+                    "oficial",
+                    "🟢 Conectando a la transmisión..."
+                );
+
+
+                cargarHLS(
+                    document.getElementById(
+                        "official-player"
+                    ),
+                    streamUrl,
+                    "oficial"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Error actualizando Leza TV:",
+                    error
+                );
+
+
+                actualizarEstadoServidor(
+                    false
+                );
+
+
+                /*
+                    IMPORTANTE:
+
+                    Aquí solamente iniciamos
+                    el video de espera.
+
+                    NO detenemos el reproductor
+                    después, porque eso era lo que
+                    impedía que video.mp4 apareciera.
+                */
+
+                reproducirVideoEspera(
+                    "oficial",
+                    "⚫ Leza Server está desconectado."
+                );
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           VERIFICAR SOCIO
+        =========================== */
+
+
+        async function verificarSocio() {
+
+            const inputCodigo =
+                document.getElementById(
+                    "codigoSocio"
+                );
+
+            const mensaje =
+                document.getElementById(
+                    "mensajeSocio"
+                );
+
+            const boton =
+                document.getElementById(
+                    "btn-verificar-socio"
+                );
+
+
+            if (!inputCodigo) {
+
+                console.error(
+                    "No se encontró el input codigoSocio"
+                );
+
+                return;
+
+            }
+
+
+            /*
+                Código escrito por el usuario.
+
+                No existe ningún código fijo.
+            */
+
+            const codigo =
+                inputCodigo.value
+                    .trim();
+
+
+            if (
+                !/^\d{5}$/.test(
+                    codigo
+                )
+            ) {
+
+                if (mensaje) {
+
+                    mensaje.textContent =
+                        "⚠️ Ingresá un código válido de 5 dígitos.";
+
+                }
+
+                return;
+
+            }
+
+
+            if (mensaje) {
+
+                mensaje.textContent =
+                    "⏳ Verificando código...";
+
+            }
+
+
+            if (boton) {
+
+                boton.disabled =
+                    true;
+
+                boton.textContent =
+                    "Verificando...";
+
+            }
+
+
+            try {
+
+                /*
+                    URL dinámica:
+
+                    API_SOCIOS +
+                    /api/personas/ +
+                    código ingresado
+                */
+
+                const url =
+                    `${API_SOCIOS}/api/personas/${encodeURIComponent(
+                        codigo
+                    )}`;
+
+
+                console.log(
+                    "Verificando socio:",
+                    url
+                );
+
+
+                const respuesta =
+                    await fetch(
+                        url,
+                        {
+                            method:
+                                "GET",
+
+                            cache:
+                                "no-store",
+
+                            headers: {
+                                "Accept":
+                                    "application/json"
+                            }
+                        }
+                    );
+
+
+                console.log(
+                    "HTTP:",
+                    respuesta.status
+                );
+
+
+                let datos;
+
+
+                try {
+
+                    datos =
+                        await respuesta.json();
+
+                } catch (error) {
+
+                    throw new Error(
+                        "La API de socios devolvió una respuesta inválida."
+                    );
+
+                }
+
+
+                console.log(
+                    "Respuesta API Socios:",
+                    datos
+                );
+
+
+                if (!respuesta.ok) {
+
+                    throw new Error(
+                        datos?.error ||
+                        "Código no válido."
+                    );
+
+                }
+
+
+                if (
+                    !datos ||
+                    datos.correcto !== true
+                ) {
+
+                    throw new Error(
+                        datos?.error ||
+                        "No se pudo verificar el código."
+                    );
+
+                }
+
+
+                if (!datos.persona) {
+
+                    throw new Error(
+                        "La API no devolvió los datos de la persona."
+                    );
+
+                }
+
+
+                if (
+                    Number(
+                        datos.persona.activo
+                    ) !== 1
+                ) {
+
+                    throw new Error(
+                        "Este código no está activo."
+                    );
+
+                }
+
+
+                /*
+                    VERIFICACIÓN CORRECTA
+                */
+
+                accesoSociosAutorizado =
+                    true;
+
+
+                personaAutorizada =
+                    datos.persona;
+
+
+                console.log(
+                    "Socio verificado:",
+                    personaAutorizada.nombre
+                );
+
+
+                if (mensaje) {
+
+                    mensaje.textContent =
+                        `✅ Bienvenido/a, ${personaAutorizada.nombre}`;
+
+                }
+
+
+                /*
+                    Guardamos la sesión.
+                */
+
+                sessionStorage.setItem(
+                    "lezaSocioVerificado",
+                    "true"
+                );
+
+
+                sessionStorage.setItem(
+                    "lezaSocioCodigo",
+                    String(
+                        personaAutorizada.codigo
+                    )
+                );
+
+
+                sessionStorage.setItem(
+                    "lezaSocioNombre",
+                    personaAutorizada.nombre
+                );
+
+
+                sessionStorage.setItem(
+                    "lezaSocioTipo",
+                    personaAutorizada.tipo ||
+                    "socio"
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        abrirTransmisionSocios();
+
+                    },
+                    500
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Error verificando socio:",
+                    error
+                );
+
+
+                accesoSociosAutorizado =
+                    false;
+
+
+                personaAutorizada =
+                    null;
+
+
+                if (mensaje) {
+
+                    mensaje.textContent =
+                        `❌ ${error.message}`;
+
+                }
+
+            } finally {
+
+                if (boton) {
+
+                    boton.disabled =
+                        false;
+
+                    boton.textContent =
+                        "Verificar";
+
+                }
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           ABRIR TRANSMISIÓN SOCIOS
+        =========================== */
+
+
+        function abrirTransmisionSocios() {
+
+            if (!accesoSociosAutorizado) {
+                return;
+            }
+
+
+            const verificacion =
+                document.getElementById(
+                    "socios-verificacion"
+                );
+
+            const reproductor =
+                document.getElementById(
+                    "socios-player-section"
+                );
+
+            const nombre =
+                document.getElementById(
+                    "nombre-socio-autorizado"
+                );
+
+
+            if (verificacion) {
+
+                verificacion.style.display =
+                    "none";
+
+            }
+
+
+            if (reproductor) {
+
+                reproductor.style.display =
+                    "block";
+
+            }
+
+
+            if (
+                nombre &&
+                personaAutorizada
+            ) {
+
+                const tipo =
+                    personaAutorizada.tipo === "equipo"
+                        ? "Miembro del equipo"
+                        : "Socio";
+
+
+                nombre.textContent =
+                    `✓ ${tipo} autorizado: ${personaAutorizada.nombre}`;
+
+            }
+
+
+            actualizarSocios();
+
+        }
+
+
+
+        /* ===========================
+           ACTUALIZAR SOCIOS
+        =========================== */
+
+
+        async function actualizarSocios() {
+
+            /*
+                Solamente se consulta la
+                transmisión después de verificar
+                correctamente al socio.
+            */
+
+            if (!accesoSociosAutorizado) {
+                return;
+            }
+
+
+            try {
+
+                const respuesta =
+                    await fetch(
+                        `${API_BASE}/api/socios/status?t=${Date.now()}`,
+                        {
+                            cache:
+                                "no-store"
+                        }
+                    );
+
+
+                if (!respuesta.ok) {
+
+                    throw new Error(
+                        `HTTP ${respuesta.status}`
+                    );
+
+                }
+
+
+                const datos =
+                    await respuesta.json();
+
+
+                console.log(
+                    "Estado socios:",
+                    datos
+                );
+
+
+                actualizarEstadoServidor(
+                    true
+                );
+
+
+                /*
+                    Si Socios está fuera del aire.
+                */
+
+                if (
+                    !datos.streamKey ||
+                    datos.obs !== "online"
+                ) {
+
+                    reproducirVideoEspera(
+                        "socios",
+                        "⚫ Leza TV Socios está fuera del aire."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                    Stream key dinámica.
+                */
+
+                const streamUrl =
+                    obtenerRutaHLS(
+                        datos,
+                        "socios"
+                    );
+
+
+                if (!streamUrl) {
+
+                    reproducirVideoEspera(
+                        "socios",
+                        "⚫ No hay transmisión disponible."
+                    );
+
+                    return;
+
+                }
+
+
+                actualizarEstadoVisualReproductor(
+                    "socios",
+                    "🟢 Conectando a la transmisión..."
+                );
+
+
+                cargarHLS(
+                    document.getElementById(
+                        "socios-player"
+                    ),
+                    streamUrl,
+                    "socios"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Error actualizando Socios:",
+                    error
+                );
+
+
+                actualizarEstadoServidor(
+                    false
+                );
+
+
+                /*
+                    También mantenemos video.mp4
+                    si el servidor está caído.
+                */
+
+                reproducirVideoEspera(
+                    "socios",
+                    "⚫ No se pudo conectar con la transmisión."
+                );
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           RESTAURAR SESIÓN DE SOCIO
+        =========================== */
+
+
+        function restaurarSesionSocio() {
+
+            const verificado =
+                sessionStorage.getItem(
+                    "lezaSocioVerificado"
+                );
+
+            const codigo =
+                sessionStorage.getItem(
+                    "lezaSocioCodigo"
+                );
+
+            const nombre =
+                sessionStorage.getItem(
+                    "lezaSocioNombre"
+                );
+
+            const tipo =
+                sessionStorage.getItem(
+                    "lezaSocioTipo"
+                );
+
+
+            if (
+                verificado === "true" &&
+                codigo &&
+                nombre
+            ) {
+
+                accesoSociosAutorizado =
+                    true;
+
+
+                personaAutorizada = {
+                    codigo:
+                        codigo,
+
+                    nombre:
+                        nombre,
+
+                    tipo:
+                        tipo || "socio",
+
+                    activo:
+                        1
+                };
+
+
+                const inputCodigo =
+                    document.getElementById(
+                        "codigoSocio"
+                    );
+
+
+                if (inputCodigo) {
+
+                    inputCodigo.value =
+                        codigo;
+
+                }
+
+            }
+
+        }
+
+
+
+        /* ===========================
+           SOLO NÚMEROS EN EL CÓDIGO
+        =========================== */
+
+
+        const inputCodigoSocio =
+            document.getElementById(
+                "codigoSocio"
+            );
+
+
+        if (inputCodigoSocio) {
+
+            inputCodigoSocio.addEventListener(
+                "input",
+                event => {
+
+                    event.target.value =
+                        event.target.value
+                            .replace(
+                                /\D/g,
+                                ""
+                            )
+                            .slice(
+                                0,
+                                5
+                            );
+
+                }
+            );
+
+        }
+
+
+
+        /* ===========================
+           ENTER PARA VERIFICAR
+        =========================== */
+
+
+        if (inputCodigoSocio) {
+
+            inputCodigoSocio.addEventListener(
+                "keydown",
+                event => {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                        verificarSocio();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* ===========================
+           ACTUALIZACIÓN AUTOMÁTICA
+        =========================== */
+
+
+        /*
+            Restauramos primero la sesión
+            del socio.
+        */
+
+        restaurarSesionSocio();
+
+
+        /*
+            Cargamos Leza TV oficial.
+        */
+
+        actualizarOficial();
+
+
+        setInterval(
+            actualizarOficial,
+            10000
+        );
+
+
+        /*
+            Socios solamente se actualiza
+            si existe autorización.
+        */
+
+        setInterval(
+            () => {
+
+                if (
+                    accesoSociosAutorizado
+                ) {
+
+                    actualizarSocios();
+
+                }
+
+            },
+            10000
+        );
+
+
+
+        /* ===========================
+           LIMPIEZA AL CERRAR
+        =========================== */
+
+
+        window.addEventListener(
+            "beforeunload",
+            () => {
+
+                destruirHLS(
+                    "oficial"
+                );
+
+                destruirHLS(
+                    "socios"
+                );
+
+            }
+        );
+
+
+
+        /* ===========================
+           DISPONIBLE GLOBALMENTE
+        =========================== */
+
+
+        window.mostrarOficial =
+            mostrarOficial;
+
+
+        window.mostrarSocios =
+            mostrarSocios;
+
+
+        window.verificarSocio =
+            verificarSocio;
+
+
+        window.abrirTransmisionSocios =
+            abrirTransmisionSocios;
+
+    </script>
+
 
 </body>
+
 </html>
