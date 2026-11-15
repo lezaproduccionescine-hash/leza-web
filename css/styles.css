@@ -370,3 +370,138 @@ a:focus-visible {
     transform: scale(1);
   }
 }
+
+/* ==========================================
+   BOTÓN FLOTANTE - LEZA ASSISTANT
+========================================== */
+
+.leza-assistant-button {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #d4af37,
+        #8f6f16
+    );
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 8px 25px rgba(212, 175, 55, 0.35);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+/* ==========================================
+   ÍCONO DEL ROBOT
+========================================== */
+
+.assistant-robot-icon {
+
+    width: 32px;
+    height: 32px;
+
+    fill: none;
+
+    stroke: #000;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+/* RELLENO DE LOS OJOS Y DETALLES */
+
+.assistant-robot-icon circle {
+
+    fill: #000;
+
+}
+
+
+/* ==========================================
+   EFECTO AL PASAR EL MOUSE
+========================================== */
+
+.leza-assistant-button:hover {
+
+    transform: scale(1.12);
+
+    box-shadow:
+        0 10px 35px rgba(212, 175, 55, 0.6);
+
+}
+
+
+.leza-assistant-button:hover
+.assistant-robot-icon {
+
+    transform: scale(1.08);
+
+}
+
+
+/* ==========================================
+   EFECTO AL HACER CLICK
+========================================== */
+
+.leza-assistant-button:active {
+
+    transform: scale(0.95);
+
+}
+
+
+/* ==========================================
+   VERSIÓN PARA CELULARES
+========================================== */
+
+@media (max-width: 600px) {
+
+    .leza-assistant-button {
+
+        width: 56px;
+        height: 56px;
+
+        right: 18px;
+        bottom: 18px;
+
+    }
+
+
+    .assistant-robot-icon {
+
+        width: 29px;
+        height: 29px;
+
+    }
+
+}

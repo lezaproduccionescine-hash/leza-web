@@ -785,6 +785,114 @@
     }
     }
 
+    /* ==========================================
+      BOTÓN FLOTANTE - LEZA ASSISTANT
+    ========================================== */
+
+    .leza-assistant-button {
+
+        position: fixed;
+
+        right: 25px;
+        bottom: 25px;
+
+        width: 64px;
+        height: 64px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: linear-gradient(
+            135deg,
+            #D4AF37,
+            #8f6f16
+        );
+
+        color: #000;
+
+        text-decoration: none;
+
+        cursor: pointer;
+
+        z-index: 99999;
+
+        box-shadow:
+            0 8px 30px rgba(212, 175, 55, 0.40);
+
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+
+    }
+
+
+    /* ÍCONO DEL ROBOT */
+
+    .leza-assistant-button span {
+
+        font-size: 30px;
+
+        line-height: 1;
+
+        transition: transform 0.25s ease;
+
+    }
+
+
+    /* EFECTO AL PASAR EL MOUSE */
+
+    .leza-assistant-button:hover {
+
+        transform: scale(1.12);
+
+        box-shadow:
+            0 10px 40px rgba(212, 175, 55, 0.65);
+
+    }
+
+
+    .leza-assistant-button:hover span {
+
+        transform: rotate(-8deg);
+
+    }
+
+
+    /* EFECTO AL HACER CLICK */
+
+    .leza-assistant-button:active {
+
+        transform: scale(0.94);
+
+    }
+
+
+    /* VERSIÓN PARA CELULARES */
+
+    @media (max-width: 600px) {
+
+        .leza-assistant-button {
+
+            width: 58px;
+            height: 58px;
+
+            right: 18px;
+            bottom: 18px;
+
+        }
+
+
+        .leza-assistant-button span {
+
+            font-size: 27px;
+
+        }
+
+    }
+
   </style>
 </head>
 
@@ -1168,10 +1276,47 @@
 </script>
 
 <!-- CARGA DEL CONTROLADOR DE LA ANIMACIÓN -->
+
 <script src="js/animacion.js"></script>
 
-</body>
-</html>
+
+<!-- ==========================================
+     BOTÓN FLOTANTE - LEZA ASSISTANT
+========================================== -->
+
+<a
+    href="https://assistant.lezaproducciones.com"
+    class="leza-assistant-button"
+    aria-label="Abrir Leza Assistant"
+    title="Abrir Leza Assistant"
+>
+    <svg
+        class="assistant-robot-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+    >
+        <path d="M12 2v3" />
+
+        <rect
+            x="4"
+            y="6"
+            width="16"
+            height="14"
+            rx="4"
+        />
+
+        <circle cx="9" cy="13" r="1.5" />
+
+        <circle cx="15" cy="13" r="1.5" />
+
+        <path d="M9 17h6" />
+
+        <circle cx="12" cy="2" r="1" />
+    </svg>
+</a>
+
 
 </body>
 </html>
+
+
